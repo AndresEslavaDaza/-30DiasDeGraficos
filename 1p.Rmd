@@ -1,0 +1,75 @@
+```{r data generation, echo = FALSE, results = "hide"}
+## DATA GENERATION
+library(forecast)
+#simular serie no estacional multiplicativa de tendencia
+#exponencial cuadr?tica
+b0=sample(c(3.5,4.5,5),size=1)
+b0
+b1=sample(c(0.003,0.005,0.006),size=1)
+b1
+b2=sample(c(2e-05,2.5e-05,3e-05),size=1)
+b2
+sigma=sample(c(0.03,0.04,0.05),size=1)
+sigma
+n=300
+t=1:n
+logYt=b0+b1*t+b2*t^2+arima.sim(n=length(t),list(ar=0.8),sd=sigma)
+Yt=ts(exp(logYt),freq=1,start=1)
+```
+
+Question
+========
+Observe la figura que corresponde a un conjunto de n=300 observaciones del logaritmo natural de una serie. De acuerdo a la tendencia exhibida en los logaritmos, ¿cuál de las siguientes ecuaciones pueden proponerse como **tendencia de los datos en la escala de transformación**?
+
+```{r scatterplot, echo = FALSE, results = "hide", fig.height = 5, fig.width = 6, fig.path = "", fig.cap = ""}
+library(forecast)
+library(ggplot2)
+autoplot(Yt, color="#f8766d") +
+  theme_minimal()+  
+  theme(text=element_text(size=14, color= "black"))+
+  labs(title="Tendencia de los Logaritmos", 
+       subtitle="serie ", 
+       tag = "N.G.G.A.",
+       caption="Estadística 3", 
+       x="periodo de tiempo", 
+       y="Log (Yt)",
+       color="",
+       shape="")+
+  theme(plot.title = element_text(hjust=0.5,size=20,colour = "#f8766d"))+
+  theme(plot.subtitle  = element_text(hjust=0.5,size=14,colour = "black"),
+        axis.title.x = element_text(color="black", size=9),
+        axis.title.y = element_text(color="black", size=9),
+        plot.caption   = element_text(size = 9),
+        plot.tag       = element_text(size = 9))
+```
+
+Answerlist
+----------
+* $\beta_{0}+\beta_{1}t+\beta_{2}t^{2}$
+* $exp(\beta_{0}+\beta_{1}t)$
+* $log(\beta_{0}+\beta_{1}t+\beta_{2}t^{2})$
+* $exp(\beta_{0}+\beta_{1}t+\beta_{2}t^{2})$
+* $log(\beta_{0})+log(\beta_{1}t)+log(\beta_{2}t^{2})$
+* Ninguna de las ecuaciones listadas
+
+
+Solution
+========
+La ecuación que mejor representa la tendencia de los datos en la escala de transformación logarítmica es:
+
+Answerlist
+----------
+* True.  $\beta_{0}+\beta_{1}t+\beta_{2}t^{2}$ [Respuesta Correcta] 
+* False. $exp(\beta_{0}+\beta_{1}t)$
+* False. $log(\beta_{0}+\beta_{1}t+\beta_{2}t^{2})$
+* False. $exp(\beta_{0}+\beta_{1}t+\beta_{2}t^{2})$
+* False. $log(\beta_{0})+log(\beta_{1}t)+log(\beta_{2}t^{2})$
+* False.  Ninguna de las ecuaciones listadas
+
+
+Meta-information
+================
+exname: R logo
+extype: schoice
+exsolution: 100000
+exshuffle: 5
